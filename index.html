@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gift Card Actuaria — 10% Descuento en Servicios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #151f47;
+      --navy-dk: #0c1230;
+      --navy-xt: #060917;
+      --indigo:  #4c64d9;
+      --orange:  #E0592A;
+      --blue:    #385CAD;
+      --white:   #ffffff;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #f0f2f8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+      gap: 48px;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(21,31,71,.45);
+    }
+
+    /* ── CARD WRAPPER ── */
+    .card-scene {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    /* ── GIFT CARD (credit-card ratio: 85.6 × 53.98 mm → 760 × 480px) ── */
+    .gift-card {
+      width: 760px;
+      height: 480px;
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--navy-xt) 0%, var(--navy) 40%, #1c2c6e 80%, #263ea8 100%);
+      box-shadow: 0 32px 64px rgba(6,9,23,.55), 0 8px 24px rgba(6,9,23,.35);
+    }
+
+    /* Grid watermark */
+    .gift-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(76,100,217,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(76,100,217,.07) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    /* Radial glow — center */
+    .glow-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 520px; height: 520px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(76,100,217,.18) 0%, transparent 68%);
+      pointer-events: none;
+    }
+
+    /* Radial glow — top right corner */
+    .glow-tr {
+      position: absolute;
+      top: -120px; right: -120px;
+      width: 360px; height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56,92,173,.22) 0%, transparent 68%);
+      pointer-events: none;
+    }
+
+    /* Big decorative brand symbol (watermark) */
+    .brand-watermark {
+      position: absolute;
+      right: -30px; bottom: -30px;
+      opacity: .06;
+      pointer-events: none;
+    }
+
+    /* ── CARD HEADER ── */
+    .card-top {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 36px;
+    }
+
+    .card-logo { display: flex; align-items: center; }
+
+    .card-type-badge {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.38);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 100px;
+      padding: 5px 14px;
+    }
+
+    /* ── DISCOUNT HERO — CENTER ── */
+    .card-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .discount-row {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      line-height: 1;
+    }
+
+    .discount-pct {
+      font-size: 128px;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -6px;
+      line-height: 1;
+      text-shadow: 0 0 80px rgba(76,100,217,.6);
+    }
+
+    .discount-sym {
+      font-size: 52px;
+      font-weight: 900;
+      color: rgba(255,255,255,.7);
+      letter-spacing: -1px;
+      align-self: flex-start;
+      margin-top: 18px;
+    }
+
+    .discount-off {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.55);
+      margin-top: -4px;
+    }
+
+    .discount-label {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: rgba(255,255,255,.42);
+      letter-spacing: 0.3px;
+      margin-top: 10px;
+      max-width: 340px;
+      line-height: 1.5;
+    }
+
+    /* ── CARD FOOTER ── */
+    .card-bottom {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 20px 36px 26px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      background: linear-gradient(to top, rgba(6,9,23,.6) 0%, transparent 100%);
+    }
+
+    .card-code-block {}
+    .card-code-lbl {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+      margin-bottom: 4px;
+    }
+    .card-code {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 3.5px;
+      color: rgba(255,255,255,.75);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .card-expiry-block { text-align: right; }
+    .card-expiry-lbl {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+      margin-bottom: 4px;
+    }
+    .card-expiry {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: rgba(255,255,255,.55);
+    }
+
+    /* Thin indigo line accent at top */
+    .card-accent {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--orange) 0%, var(--indigo) 45%, var(--blue) 100%);
+    }
+
+    /* ── CARD BACK ── */
+    .gift-card-back {
+      width: 760px;
+      height: 480px;
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      background: white;
+      border: 1px solid rgba(21,31,71,.1);
+      box-shadow: 0 16px 48px rgba(21,31,71,.1), 0 4px 12px rgba(21,31,71,.06);
+    }
+
+    .back-accent {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--orange) 0%, var(--indigo) 45%, var(--blue) 100%);
+    }
+
+    .back-stripe {
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 80px;
+      background: linear-gradient(180deg, var(--navy) 0%, #1c2c6e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .back-stripe-text {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+    }
+
+    .back-content {
+      margin-left: 80px;
+      padding: 36px 40px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .back-header {}
+    .back-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.3px;
+      margin-bottom: 6px;
+    }
+    .back-subtitle {
+      font-size: 13px;
+      color: rgba(21,31,71,.5);
+      line-height: 1.55;
+      max-width: 420px;
+    }
+
+    .back-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .back-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .step-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(76,100,217,.08);
+      border: 1.5px solid rgba(76,100,217,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 800;
+      color: var(--indigo);
+      flex-shrink: 0;
+    }
+
+    .step-text {}
+    .step-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 1px;
+    }
+    .step-desc {
+      font-size: 11.5px;
+      color: rgba(21,31,71,.5);
+      line-height: 1.45;
+    }
+
+    .back-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(21,31,71,.07);
+      padding-top: 16px;
+    }
+
+    .back-code-area {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .back-code-lbl {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(21,31,71,.35);
+    }
+    .back-code-val {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: var(--navy);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .back-discount-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(76,100,217,.07);
+      border: 1.5px solid rgba(76,100,217,.2);
+      border-radius: 14px;
+      padding: 10px 22px;
+    }
+    .pill-pct {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--indigo);
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+    .pill-off {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(76,100,217,.6);
+    }
+
+    .back-contact {
+      text-align: right;
+    }
+    .back-contact a {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--indigo);
+      text-decoration: none;
+      display: block;
+    }
+    .back-contact span {
+      font-size: 10px;
+      color: rgba(21,31,71,.4);
+    }
+
+    /* ── DISCLAIMER ── */
+    .disclaimer {
+      font-size: 11px;
+      color: rgba(21,31,71,.35);
+      text-align: center;
+      max-width: 560px;
+      line-height: 1.6;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+        gap: 0;
+      }
+      .page-label, .disclaimer, .card-scene-label { display: none; }
+      .card-scene { gap: 0; }
+      .gift-card, .gift-card-back {
+        width: 100vw;
+        height: 50vw;
+        border-radius: 0;
+        box-shadow: none;
+        page-break-after: always;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <p class="page-label">ACTAF-4721 · Gift Card Entrevistas · Actuaria Consultores</p>
+
+  <!-- ─── CARA FRONTAL ─── -->
+  <div class="card-scene">
+    <div class="gift-card">
+      <div class="card-accent"></div>
+      <div class="glow-center"></div>
+      <div class="glow-tr"></div>
+
+      <!-- Brand symbol watermark -->
+      <div class="brand-watermark">
+        <svg width="320" height="320" viewBox="0 0 26.45 37.7" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 26.3313H10.2925V7.1817C10.2925 7.1817 8.3217 16.7542 0 26.3313Z" fill="white"/>
+          <path d="M12.0833 0C20.4512 2.88006 26.4467 10.1817 26.4467 19.3204C26.4467 21.7758 26.0128 24.1343 25.219 26.3267H12.088V0H12.0833Z" fill="white"/>
+          <path d="M5.14629 37.6992C12.9095 37.6992 20.6635 33.8499 24.2959 28.1267H5.14629V37.6992Z" fill="white"/>
+        </svg>
+      </div>
+
+      <!-- Header: logo + badge -->
+      <div class="card-top">
+        <div class="card-logo">
+          <svg xmlns="http://www.w3.org/2000/svg" width="118" height="29" viewBox="0 0 157 38" fill="none">
+            <path d="M44.867 23.4143H35.7976L34.4915 26.3267H31.2329L40.2423 6.77091H40.4223L49.4317 26.3267H46.1732L44.867 23.4143ZM43.6993 20.8343L40.3346 13.3433L36.9607 20.8343H43.6993Z" fill="white"/>
+            <path d="M49.2887 16.7588C49.2887 11.3633 53.7934 6.83093 59.1796 6.83093C61.6628 6.86785 63.9566 7.9248 65.8351 9.75714L64.0859 12.1249C62.7428 10.7818 60.9935 9.89099 59.115 9.89099C55.6442 9.89099 52.3256 12.9326 52.3256 16.7727C52.3256 20.6127 55.6903 23.622 59.1242 23.622C61.0858 23.622 62.7751 22.6482 64.0951 21.3374L65.8305 23.7605C64.1782 25.3898 62.0735 26.6359 59.2212 26.6359C53.7888 26.6359 49.284 22.1635 49.284 16.7588H49.2887Z" fill="white"/>
+            <path d="M80.2354 10.1494H75.0984V26.3267H72.0799V10.1494H66.9429V7.16323H80.2354V10.1494Z" fill="white"/>
+            <path d="M82.4463 19.0665V7.16323H85.4648V19.0527C85.4648 21.702 87.3294 23.6405 89.6741 23.6405C92.0188 23.6405 93.9065 21.702 93.9065 19.0527V7.16323H96.9389V19.0619C96.9389 23.4605 93.7634 26.6821 89.688 26.6821C85.6125 26.6821 82.4463 23.4605 82.4463 19.0619V19.0665Z" fill="white"/>
+            <path d="M110.73 23.4143H101.661L100.354 26.3267H97.0958L106.105 6.77092H106.285L115.295 26.3267H112.036L110.73 23.4143ZM109.562 20.8343L106.198 13.3434L102.824 20.8343H109.562Z" fill="white"/>
+            <path d="M127.955 26.3267L122.795 18.9096H120.441V26.3267H117.432L117.418 7.16323H123.372C126.939 7.16323 129.861 9.90944 129.861 13.3203C129.861 15.7942 128.269 17.945 126.067 18.6558L131.643 26.3221H127.946L127.955 26.3267ZM123.45 16.4126C125.259 16.4265 126.769 14.9634 126.769 13.251C126.769 11.5387 125.236 10.1494 123.45 10.1494H120.432V16.4126H123.45Z" fill="white"/>
+            <path d="M133.673 7.16323H136.683V26.3267H133.673V7.16323Z" fill="white"/>
+            <path d="M152.435 23.4143H143.366L142.06 26.3267H138.801L147.811 6.77092H147.991L157 26.3267H153.741L152.435 23.4143ZM151.268 20.8343L147.903 13.3434L144.529 20.8343H151.268Z" fill="white"/>
+            <path d="M0 26.3313H10.2925V7.1817C10.2925 7.1817 8.3217 16.7542 0 26.3313Z" fill="#E0592A"/>
+            <path d="M12.0833 0C20.4512 2.88006 26.4467 10.1817 26.4467 19.3204C26.4467 21.7758 26.0128 24.1343 25.219 26.3267H12.088V0H12.0833Z" fill="white"/>
+            <path d="M5.14629 37.6992C12.9095 37.6992 20.6635 33.8499 24.2959 28.1267H5.14629V37.6992Z" fill="#385CAD"/>
+          </svg>
+        </div>
+        <span class="card-type-badge">Gift Card</span>
+      </div>
+
+      <!-- Center: discount hero -->
+      <div class="card-center">
+        <div class="discount-row">
+          <span class="discount-pct">10</span>
+          <span class="discount-sym">%</span>
+        </div>
+        <div class="discount-off">de descuento</div>
+        <div class="discount-label">en la contratación de nuestros servicios</div>
+      </div>
+
+      <!-- Footer: code + expiry -->
+      <div class="card-bottom">
+        <div class="card-code-block">
+          <div class="card-code-lbl">Código</div>
+          <div class="card-code">ACTU-2026-10</div>
+        </div>
+        <div class="card-expiry-block">
+          <div class="card-expiry-lbl">Válida hasta</div>
+          <div class="card-expiry">DIC 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── CARA POSTERIOR ─── -->
+    <div class="gift-card-back">
+      <div class="back-accent"></div>
+
+      <div class="back-stripe">
+        <span class="back-stripe-text">Actuaria Consultores · Gift Card</span>
+      </div>
+
+      <div class="back-content">
+        <div class="back-header">
+          <div class="back-title">¿Cómo usar tu gift card?</div>
+          <div class="back-subtitle">Presenta este código en tu primera reunión con nuestro equipo y obtén 10% de descuento en cualquiera de nuestros servicios actuariales.</div>
+        </div>
+
+        <div class="back-steps">
+          <div class="back-step">
+            <div class="step-num">1</div>
+            <div class="step-text">
+              <div class="step-title">Agenda tu consulta</div>
+              <div class="step-desc">Contacta a nuestro equipo y solicita una reunión de diagnóstico sin costo.</div>
+            </div>
+          </div>
+          <div class="back-step">
+            <div class="step-num">2</div>
+            <div class="step-text">
+              <div class="step-title">Presenta tu gift card</div>
+              <div class="step-desc">Comparte el código al momento de contratar cualquier servicio de Actuaria Consultores.</div>
+            </div>
+          </div>
+          <div class="back-step">
+            <div class="step-num">3</div>
+            <div class="step-text">
+              <div class="step-title">Recibe tu descuento</div>
+              <div class="step-desc">El 10% se aplica directamente sobre el valor del servicio contratado.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="back-footer">
+          <div class="back-code-area">
+            <div class="back-code-lbl">Código de descuento</div>
+            <div class="back-code-val">ACTU-2026-10</div>
+          </div>
+          <div class="back-discount-pill">
+            <span class="pill-pct">10%</span>
+            <span class="pill-off">Descuento</span>
+          </div>
+          <div class="back-contact">
+            <a href="mailto:contacto@actuaria.com">contacto@actuaria.com</a>
+            <span>actuaria.com · 35+ años de experiencia</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="disclaimer">
+    Gift card válida hasta el 31 de diciembre de 2026. No acumulable con otras promociones.<br>
+    Aplica para nuevos contratos de servicios de Actuaria Consultores. Sujeto a disponibilidad.
+  </p>
+
+</body>
+</html>
